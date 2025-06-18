@@ -1,0 +1,10 @@
+{
+  "profiles": {
+    "3CXWebHook": {
+      "commandName": "Project"
+    },
+    "Container (Dockerfile)": {
+      "commandName": "Docker"
+    }
+  }
+}
