@@ -77,7 +77,8 @@ namespace _3CXTimeControl.Services
                                             if (decoMessage._event.entity!.ToLower().Contains("/participants/"))
                                             {
                                                 var id = int.Parse(decoMessage._event.entity!.Split("/")[4]);
-                                                var extension = int.Parse(decoMessage._event.entity!.Split("/")[2]);
+                                                var extension = 0;
+                                                int.TryParse(decoMessage._event.entity!.Split("/")[2], out extension);
                                                 var resp = await _connectionService.SendParticipantRequest(decoMessage._event.entity!);
                                                 if (resp != null)
                                                 {
@@ -117,7 +118,9 @@ namespace _3CXTimeControl.Services
                                             if (decoMessage._event.entity!.ToLower().Contains("/participants/"))
                                             {
                                                 var id = int.Parse(decoMessage._event.entity!.Split("/")[4]);
-                                                var extension = int.Parse(decoMessage._event.entity!.Split("/")[2]);
+                                                var extension = 0;
+                                                int.TryParse(decoMessage._event.entity!.Split("/")[2], out extension);
+                                                //var extension = int.Parse(decoMessage._event.entity!.Split("/")[2]);
                                                 var items = _memoryStorageService.GetItems(id);
                                                 if (items.Any())
                                                 {
