@@ -1,0 +1,18 @@
+services:
+# timecontrol3cx
+  timecontrol3cx:
+    container_name: timecontrol3cx
+    restart: always
+    image: gmoreno90/3cxtimecontrol:latest
+    environment:
+      - ASPNETCORE_ENVIRONMENT=General
+      - TZ=Europe/Madrid
+
+    networks:
+      - frontend-network
+
+
+networks:
+  frontend-network:
+    name: frontend-network
+    external: false
