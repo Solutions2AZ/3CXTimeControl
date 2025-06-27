@@ -48,6 +48,7 @@ namespace _3CXTimeControl.Services
                 response.EnsureSuccessStatusCode();
                 string jsonResponse = await response.Content.ReadAsStringAsync();
                 Console.WriteLine(jsonResponse);
+                //File.AppendAllText(@"E:\source\repos\Gon\Solutions2AZ\3CX\3CXTimeControl\trazaParticipants.log", jsonResponse);
                 return JsonSerializer.Deserialize<ParticipantsRS>(jsonResponse);
             }
             catch (Exception ex)
