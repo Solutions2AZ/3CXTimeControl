@@ -90,7 +90,7 @@ namespace _3CXTimeControl.Services
                                                     {
                                                         _memoryStorageService.AddItem(data);
                                                     }
-                                                    if ((extension >= _config.MinExtension && extension <= _config.MaxExtension) && resp != null && resp.status!.ToLower() == "connected")
+                                                    if ((extension >= _config.MinExtension && extension <= _config.MaxExtension && resp.party_caller_id?.Length == 9) && resp != null && resp.status!.ToLower() == "connected")
                                                     {
                                                         var infoCliente = await _dbContext.Clientes.FirstOrDefaultAsync(x => x.NumeroTelefono == resp.party_caller_id);
 
