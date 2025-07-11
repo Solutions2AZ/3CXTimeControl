@@ -135,20 +135,25 @@ namespace _3CXTimeControl.Services
                                                         var cliente = await _dbContext.Clientes.FirstOrDefaultAsync(x => x.NumeroTelefono == lastItem.destination);
                                                         if (cliente != null)
                                                         {
+                                                            
                                                             cliente.MinutosDisponibles -= 1;
                                                             if (cliente.MinutosDisponibles <= 0)
                                                             {
                                                                 cliente.MinutosDisponibles = 0;
                                                             }
                                                             cliente.FechaUltimaActualizacion = DateTime.Now;
+                                                            Console.WriteLine($"Query colgar: Cliente {cliente.Id}: MinutosDisponibles={cliente.MinutosDisponibles}, FechaUltimaActualizacion={cliente.FechaUltimaActualizacion}");
+                                                            await _dbContext.SaveChangesAsync();
                                                             DateTime fechaInicio = items.OrderBy(x => x.date).FirstOrDefault()!.date!.Value.DateTime;
                                                             DateTime fechaFin = lastItem.date.Value.DateTime;
                                                             TimeSpan diferencia = fechaFin - fechaInicio;
                                                             int minutosRedondeados = (int)Math.Ceiling(diferencia.TotalMinutes);
-                                                            cliente.Llamada.Add(new Llamada() { DuracionMinutos = minutosRedondeados, FechaFin = fechaFin, FechaInicio = fechaInicio, ClienteId = cliente.Id, NumeroTelefono = lastItem.destination, MinutosConsumidos = minutosRedondeados });
+                                                            _dbContext.Llamadas.Add(new Llamada() { DuracionMinutos = minutosRedondeados, FechaFin = fechaFin, FechaInicio = fechaInicio, ClienteId = cliente.Id, NumeroTelefono = lastItem.destination, MinutosConsumidos = minutosRedondeados });
                                                             await _dbContext.SaveChangesAsync();
+                                                            Console.WriteLine($"Insert llamada: Cliente {cliente.Id}: MinutosDisponibles={minutosRedondeados}, FechaUltimaActualizacion={cliente.FechaUltimaActualizacion}");
+                                                            _memoryStorageService.ClearItems(id);
                                                         }
-                                                        _memoryStorageService.ClearItems(id);
+                                                        
                                                     }
 
                                                     

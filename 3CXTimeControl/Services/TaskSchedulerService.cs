@@ -64,6 +64,7 @@ namespace _3CXTimeControl.Services
 
                             cliente.FechaUltimaActualizacion = DateTime.Now;
                             await db.SaveChangesAsync();
+                            Console.WriteLine($"Cliente {clienteId}: MinutosDisponibles={cliente.MinutosDisponibles}, FechaUltimaActualizacion={cliente.FechaUltimaActualizacion}");
                             if (cliente.MinutosDisponibles < 0)
                             {
                                 cliente.MinutosDisponibles = 0;
@@ -74,7 +75,7 @@ namespace _3CXTimeControl.Services
                                     await _connectionService.ActionOfCall(path, "routeto", _config.CFDEndCall!);
 
                             }
-                            Console.WriteLine($"Cliente {clienteId}: MinutosDisponibles={cliente.MinutosDisponibles}, FechaUltimaActualizacion={cliente.FechaUltimaActualizacion}");
+                            
                         }
                     }
                 }
