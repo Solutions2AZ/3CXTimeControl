@@ -90,9 +90,9 @@ namespace _3CXTimeControl.Services
                                                     {
                                                         _memoryStorageService.AddItem(data);
                                                     }
-                                                    if ((extension >= _config.MinExtension && extension <= _config.MaxExtension && (resp.party_caller_id?.Length == 9 || resp.party_caller_name?.Length == 9)) && resp != null && resp.status!.ToLower() == "connected")
+                                                    if ((extension >= _config.MinExtension && extension <= _config.MaxExtension && (resp.party_caller_id?.Length >= 9 || resp.party_caller_name?.Length >= 9)) && resp != null && resp.status!.ToLower() == "connected")
                                                     {
-                                                        var tlfCliente = !string.IsNullOrEmpty(resp.party_caller_id) && resp.party_caller_id?.Length == 9 ? resp.party_caller_id : resp.party_caller_name;
+                                                        var tlfCliente = !string.IsNullOrEmpty(resp.party_caller_id) && resp.party_caller_id?.Length >= 9 ? resp.party_caller_id : resp.party_caller_name;
                                                         var infoCliente = await _dbContext.Clientes.FirstOrDefaultAsync(x => x.NumeroTelefono == tlfCliente);
 
                                                         if (infoCliente != null)
